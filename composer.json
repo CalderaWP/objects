@@ -9,7 +9,6 @@
             "email": "Josh@calderawp.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {},
     "autoload": {
         "psr-4": {

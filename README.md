@@ -8,16 +8,6 @@ A few variations on the `stdClass` object.
 `almostStdValidatable` extends `almostStd` and adds a validation callback to get/set.
 
 ## Install
-```
-   "repositories" : [
-        {
-            "url" : "https://github.com/CalderaWP/objects",
-            "type": "git"
-        }
-    ],
-    "require": {
-        "calderawp/object": "*"
-    },
-```    
+`composer require calderawp/object`
 
 ### Copyright 2016 CalderaWP LLC & Josh Pollock. Licensed under the terms of the GNU GPL version 2 or later. Please share with your neighbor.

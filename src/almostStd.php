@@ -24,6 +24,21 @@ abstract class almostStd implements \JsonSerializable {
 	}
 
 	/**
+	 * Factory from array
+	 *
+	 * @param array $array
+	 */
+	public static function fromArray( array  $array ){
+		$obj = new static();
+		foreach ( get_object_vars( $obj ) as $property => $value ) {
+			if(  isset( $array[ $property ]) ){
+				$obj->$property = $value;
+			}
+
+		}
+	}
+
+	/**
 	 * Allow use of named getters
 	 *
 	 * @param string $name Function name, should be get_$prop()
@@ -116,5 +131,7 @@ abstract class almostStd implements \JsonSerializable {
 
 		}
 	}
+
+
 
 }

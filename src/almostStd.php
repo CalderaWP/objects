@@ -33,7 +33,7 @@ abstract class almostStd implements \JsonSerializable {
 	 */
 	public function __call( $name, $arguments ) {
 		$prop = str_replace( 'get_', '', $name );
-		if( property_exists( $this->$prop, $this ) ){
+		if( property_exists( $this, $prop ) ){
 			return $this->$prop;
 		}
 
@@ -53,7 +53,7 @@ abstract class almostStd implements \JsonSerializable {
 	public function __set( $prop, $value )
 	{
 		if ( is_string( $prop ) ) {
-			if ( property_exists( $this->$prop, $this ) ) {
+			if( property_exists( $this, $prop ) ){
 				$this->$prop = $value;
 				return true;
 			}
@@ -75,7 +75,7 @@ abstract class almostStd implements \JsonSerializable {
 	public function __get( $prop )
 	{
 		if ( is_string( $prop ) ) {
-			if ( property_exists( $this, $prop ) ) {
+			if( property_exists( $this, $prop ) ){
 				return $this->$prop;
 			}
 		}

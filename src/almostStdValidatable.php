@@ -23,7 +23,7 @@ abstract class almostStdValidatable extends almostStd {
 	 */
 	public function __set( $property, $value )
 	{
-		if ( property_exists( $property, $this ) ) {
+		if ( property_exists( $this, $property ) ) {
 			$setter = $property . '_set';
 			if ( method_exists( $this, $setter ) ) {
 				return call_user_func( array( $this, $setter ), $value );
@@ -45,11 +45,12 @@ abstract class almostStdValidatable extends almostStd {
 	 */
 	public function __get( $property )
 	{
-		if ( property_exists( $property, $this ) ) {
+		if ( property_exists( $this, $property ) ) {
 			$getter = $property . '_get';
 			if( method_exists( $this, $getter  ) ){
 				return call_user_func( array( $this, $getter ) );
 			}
+			
 			if ( property_exists( $this, $property ) ) {
 				return $this->apply_filter( $property, $this->$property );
 			} else {

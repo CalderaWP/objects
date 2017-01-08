@@ -24,21 +24,6 @@ abstract class almostStd implements \JsonSerializable {
 	}
 
 	/**
-	 * Factory from array
-	 *
-	 * @param array $array
-	 */
-	public static function fromArray( array  $array ){
-		$obj = new static();
-		foreach ( get_object_vars( $obj ) as $property => $value ) {
-			if(  isset( $array[ $property ]) ){
-				$obj->$property = $value;
-			}
-
-		}
-	}
-
-	/**
 	 * Allow use of named getters
 	 *
 	 * @param string $name Function name, should be get_$prop()
@@ -60,13 +45,22 @@ abstract class almostStd implements \JsonSerializable {
 	 * 
 	 * @param string $prop Name of property
 	 * @param mixed $value Value of property
+	 *
+	 * @throws \Exception If $prop is not stringh
+	 *
+	 * @return  bool True.
 	 */
 	public function __set( $prop, $value )
 	{
-		if( property_exists( $this->$prop, $this ) ){
-			$this->$prop = $value;
+		if ( is_string( $prop ) ) {
+			if ( property_exists( $this->$prop, $this ) ) {
+				$this->$prop = $value;
+				return true;
+			}
+
 		}
 
+		throw new \Exception( sprintf( 'Prop passed to almostStd::__set() (as %s) must be string. Type is %s.', get_class( $this ), gettype( $prop ) ) );
 	}
 
 	/**
@@ -74,13 +68,20 @@ abstract class almostStd implements \JsonSerializable {
 	 *
 	 * @param string $prop Name of property
 	 *
+	 * @throws \Exception If $prop is not stringh
+	 *
 	 * @return mixed
 	 */
 	public function __get( $prop )
 	{
-		if( property_exists(  $this, $prop ) ){
-			return $this->$prop;
+		if ( is_string( $prop ) ) {
+			if ( property_exists( $this, $prop ) ) {
+				return $this->$prop;
+			}
 		}
+
+		throw new \Exception( sprintf( 'Prop passed to almostStd::__get() (as %s) must be string. Type is %s.', get_class( $this ), gettype( $prop ) ) );
+
 
 	}
 
@@ -131,7 +132,5 @@ abstract class almostStd implements \JsonSerializable {
 
 		}
 	}
-
-
 
 }

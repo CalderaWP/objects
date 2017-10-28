@@ -8,7 +8,7 @@ namespace calderawp\object;
  *
  * @package calderawp\object
  */
-abstract class almostStd implements \JsonSerializable {
+abstract class almostStd extends jsonAndArrayable {
 
 	/**
 	 * almostStd constructor.
@@ -42,11 +42,11 @@ abstract class almostStd implements \JsonSerializable {
 
 	/**
 	 * Set value of property if it exists
-	 * 
+	 *
 	 * @param string $prop Name of property
 	 * @param mixed $value Value of property
 	 *
-	 * @throws \Exception If $prop is not stringh
+	 * @throws \Exception If $prop is not string
 	 *
 	 * @return  bool True.
 	 */
@@ -58,9 +58,12 @@ abstract class almostStd implements \JsonSerializable {
 				return true;
 			}
 
+			return false;
+		}else{
+			throw new \Exception( sprintf( 'Prop passed to almostStd::__set() (as %s) must be string. Type is %s.', get_class( $this ), gettype( $prop ) ) );
+
 		}
 
-		throw new \Exception( sprintf( 'Prop passed to almostStd::__set() (as %s) must be string. Type is %s.', get_class( $this ), gettype( $prop ) ) );
 	}
 
 	/**
@@ -94,30 +97,6 @@ abstract class almostStd implements \JsonSerializable {
 	public function setFromObject( \stdClass $obj )
 	{
 		$this->translate( $obj );
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public function jsonSerialize()
-	{
-		return $this->toArray();
-	}
-
-	/**
-	 * Convert to array
-	 *
-	 * @return array
-	 */
-	public function toArray()
-	{
-		$vars = get_object_vars(  $this );
-		$array = [];
-		foreach( $vars as $property => $value ){
-			$array[ $property ] = $value;
-		}
-
-		return $array;
 	}
 
 	/**
